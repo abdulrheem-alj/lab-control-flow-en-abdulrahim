@@ -1,0 +1,87 @@
+AI Server Detective Lab - Investigation Report
+
+Student Name: Abdulrahim aljadaani  
+Date: 2001/6/2
+
+
+1. Surveying the Scene
+- Collected files:
+
+$ curl -k -o activity.txt https://raw.githubusercontent.com/eliza-guseva/ai-eng-nbs-public/refs/heads/master/ai-eng-nbs-1-master/detective_lab/activity.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   216  100   216    0     0    452      0 --:--:-- --:--:-- --:--:--   454
+
+ ~/detective_lab
+$ curl -k -o logs.txt https://raw.githubusercontent.com/eliza-guseva/ai-eng-nbs-public/refs/heads/master/ai-eng-nbs-1-master/detective_lab/logs.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   239  100   239    0     0    464      0 --:--:-- --:--:-- --:--:--   465
+
+~/detective_lab
+$ ls
+activity.txt  logs.txt
+
+$ wc -l activity.txt
+6 activity.txt
+
+~/detective_lab
+$ wc -l logs.txt
+6 logs.txt
+
+
+~/detective_lab
+$ grep -i 'error\|waring' activity.txt | wc -l
+0
+
+~/detective_lab
+$ grep -i 'error\|waring' logs.txt | wc -l
+2
+
+~/detective_lab
+$ grep -i 'error\|waring' activity.txt logs.txt | wc -l
+2
+
+
+
+
+2. Error Messages:
+
+~/detective_lab
+$ grep -i 'error\|waring' activity.txt logs.txt > error.txt
+
+~/detective_lab
+$ cat error.txt
+logs.txt:ERROR: Model failed to load at 09:15
+logs.txt:ERROR: Out of memory at 14:20
+
+
+3. User Activity Analysis
+
+~/detective_lab
+$ grep 'logged in' combined_logs.txt | sort -k6 -r | head -n 1
+User charlie logged in at 14:25ERROR: Model failed to load at 09:15
+
+~/detective_lab
+$ grep 'logged in' combined_logs.txt | cut -d' ' -f2 | sort | uniq
+bob
+charlie
+nina
+trinity
+
+~/detective_lab
+$ grep 'logged in' combined_logs.txt | cut -d' ' -f2 | sort | uniq > unique_users.txt
+
+~/detective_lab
+$ ls
+activity.txt  combined_logs.txt  error.txt  logs.txt  unique_users.txt
+
+
+4. Commands Used
+ 
+pwd,cd,wc ,ls, cat ,mkdir,curl,touch, mv,echo,grep
+ 
+ 
+5. Conclusion
+ 
+Fifteen unique users accessed the system, with some, like Bob and Eve, showing suspicious off-hours activity. Recommendations include enhancing monitoring and conducting security training to address potential unauthorized access.
